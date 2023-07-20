@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * jack_bauer - every minute of the damn day	
+ * jack_bauer - every minute of the damn day
  * Return: numbers
  */
 
@@ -10,7 +10,7 @@ void jack_bauer(void)
 
 	for (i = 0; i <= 23; i++)
 	{
-		for(j = 0; j <= 59; j++)
+		for (j = 0; j <= 59; j++)
 		{
 			_putchar((i / 10) + '0');
 			_putchar((i % 10) + '0');
