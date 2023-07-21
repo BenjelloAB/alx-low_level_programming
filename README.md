@@ -1,2 +1,1 @@
-# alx-low_level_programming
-this repo will cover low level prog with C :)
+Low level programming projects with C
