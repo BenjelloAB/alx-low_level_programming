@@ -9,9 +9,6 @@
 
 char *_strcpy(char *dest, char *src)
 {
-	if (dest == NULL || src == NULL)
-		return NULL;
-
 	char *dest2 = dest;
 	
 	while (*src != '\0')
