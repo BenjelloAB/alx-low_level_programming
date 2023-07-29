@@ -1,3 +1,10 @@
+#include "main.h"
+/**
+ * leet - transform some char to num
+ * @str: pointer pointing to the string
+ * Return: pointer
+ */
+
 char *leet(char *str)
 {
 	int i = 0;
