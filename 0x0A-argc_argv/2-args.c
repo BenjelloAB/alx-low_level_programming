@@ -2,7 +2,7 @@
 
 /**
  * main - returns all arguments
- * @argv: list og arguments 
+ * @argv: list og arguments
  * @argc: number of arguments
  * Return: int
  */
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
 	for (i = 0; i < argc; i++)
 	{
-		printf("%s\n",argv[i]);
+		printf("%s\n", argv[i]);
 	}
 	return (0);
 }
