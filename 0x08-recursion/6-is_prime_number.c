@@ -10,9 +10,11 @@ int isPrimeRec(int n, int div)
 {
 	if (div == 1)
 		return (1);
-	if (n % div == 0)
+	else if (n % div == 0)
 		return (0);
-	return (isPrimeRec(n, n - 1));
+	else
+		return (isPrimeRec(n, div - 1));
+
 }
 /**
  * is_prime_number - checks if a number is prime number
@@ -22,6 +24,11 @@ int isPrimeRec(int n, int div)
 int is_prime_number(int n)
 {
 	if (n <= 1)
+	{
 		return (0);
+	}
+	else
+	{	
 	return (isPrimeRec(n, n - 1));
+	}
 }
