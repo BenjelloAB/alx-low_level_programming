@@ -28,7 +28,7 @@ int is_prime_number(int n)
 		return (0);
 	}
 	else
-	{	
+	{
 	return (isPrimeRec(n, n - 1));
 	}
 }
