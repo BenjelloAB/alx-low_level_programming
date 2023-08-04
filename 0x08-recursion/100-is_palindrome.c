@@ -25,7 +25,7 @@ int rec_palindrome_2(char *s, int i, int len)
 int rec_palindrome(char *s, int i, int len)
 {
 	if (s[i] == '\0')
-		return (rec_palindrome2(s, 0, len));
+		return (rec_palindrome_2(s, 0, len));
 	return (rec_palindrome(s, i + 1, len + 1));
 }
 /**
