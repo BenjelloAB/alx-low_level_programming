@@ -41,11 +41,17 @@ int main(int argc, char *argv[])
 	count++;
 	continue;
 	}
-	if (number >= 1)
+	if (number >= 2)
 	{
-	number -= 1;
+	number -= 2;
 	count++;
 	continue;
+	}
+	if (number >= 1)
+	{
+		number -= 1;
+		count++;
+		continue;
 	}
 	}
 	printf("%d\n", count);
