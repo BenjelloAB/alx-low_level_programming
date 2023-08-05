@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
 		printf("0\n");
 	for (i = 0; i < argc; i++)
 	{
-		if ((*argv[i] >= 65 && *argv[i] <= 90) || (*argv[i] >= 97 && *argv[i] <= 122))
+		if ((*argv[i] >= 65 && *argv[i] <= 90)
+		|| (*argv[i] >= 97 && *argv[i] <= 122))
 		{
 			printf("Error\n");
 			return (1);
