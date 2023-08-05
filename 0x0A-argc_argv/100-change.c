@@ -9,13 +9,11 @@
 	*/
 int main(int argc, char *argv[])
 {
-	int count = 0;
-
-	int number;
+	int number, count = 0;
 
 	if (argc < 2)
 	{
-	puts("Error");
+	printf("Error\n");
 	return (1);
 	}
 	number = atoi(argv[1]);
@@ -50,6 +48,5 @@ int main(int argc, char *argv[])
 	number--;
 	}
 	printf("%d\n", count);
-
 	return (0);
 }
