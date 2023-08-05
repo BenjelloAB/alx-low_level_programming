@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 	int number;
 
-	if (argc < 2)
+	if (argc < 3)
 	{
 		printf("Error\n");
 		return (1);
@@ -26,6 +26,6 @@ int main(int argc, char *argv[])
 			p *= number;
 		}
 		printf("%d\n", p);
-	
+
 	return (0);
 }
