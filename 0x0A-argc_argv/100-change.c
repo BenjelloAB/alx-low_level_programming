@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
 
 	int number;
 
-	int j = 0;
-
 	if (argc < 2)
 	{
 	puts("Error");
@@ -27,7 +25,7 @@ int main(int argc, char *argv[])
 		break;
 	if (number >= 25)
 	{
-	number -= 2
+	number -= 25;
 	count++;
 	continue;
 	}
