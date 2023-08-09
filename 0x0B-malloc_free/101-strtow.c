@@ -8,7 +8,7 @@
 	*/
 char **strtow(char *str)
 {
-	int i = 0, j = 0, z = 0, len = 0, nW = 0;
+	int i = 0, z = 0, len = 0, nW = 0;
 
 	char *watcher, **stk;
 
