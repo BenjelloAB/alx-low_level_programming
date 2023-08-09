@@ -8,36 +8,39 @@
 	*/
 char **strtow(char *str)
 {
-	int i, z = 0, len = 0, nW = 0;
+	int i = 0, j = 0, z = 0, len = 0, nW = 0;
+
 	char *watcher, **stk;
 
-	if (str == 0 || *str == 0)
+	if (str == NULL || *str == '\0')
 	{
-
 	return (NULL);
 	}
-	i = 0;
 	while (str[i] != '\0')
 	{
 	if (str[i] == ' ')
 	{
-
 	i++;
 	}
 	else
 	{
 	while (str[i] != ' ' && str[i] != '\0')
+	{
 	i++;
+	}
 	nW++;
 	}
 	}
 	if (nW == 0)
-	return (NULL);
-	stk = (char **)malloc(sizeof(char *) * nW);
-	if (stk == NULL)
-	return (NULL);
-	for (i = 0; i < nW; i++)
 	{
+	return (NULL);
+	}
+	stk = (char **)malloc(sizeof(char *) * (nW + 1));
+	if (stk == NULL)
+	{
+	return (NULL);
+	}
+	i = 0;
 	while (*str != '\0')
 	{
 	if (*str == ' ')
@@ -49,11 +52,9 @@ char **strtow(char *str)
 	watcher = str;
 	while (*str != '\0' && *str != ' ')
 	{
-
 	len++;
 	str++;
 	}
-
 	stk[i] = (char *)malloc(sizeof(char) * (len + 1));
 	if (stk[i] == NULL)
 	{
@@ -63,7 +64,9 @@ char **strtow(char *str)
 	i--;
 	}
 	free(stk);
+	return (NULL);
 	}
+	z = 0;
 	while (*watcher != '\0' && *watcher != ' ')
 	{
 	stk[i][z] = *watcher;
@@ -73,9 +76,13 @@ char **strtow(char *str)
 	stk[i][z] = '\0';
 	len = 0;
 	z = 0;
+	i++;
+	while (*str != ' ' && *str != '\0')
+	{
 	str++;
 	}
 	}
 	}
+	stk[nW] = NULL;
 	return (stk);
 }
