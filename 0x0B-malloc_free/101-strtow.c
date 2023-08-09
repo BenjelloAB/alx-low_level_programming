@@ -8,7 +8,7 @@
 	*/
 char **strtow(char *str)
 {
-	int i, j = 0, z = 0, len = 0, nW = 0;
+	int i, z = 0, len = 0, nW = 0;
 	char *watcher, **stk;
 
 	if (str == 0 || *str == 0)
@@ -31,7 +31,6 @@ char **strtow(char *str)
 	nW++;
 	}
 	}
-	printf("%d", nW);
 	if (nW == 0)
 	return (NULL);
 	stk = (char **)malloc(sizeof(char *) * nW);
