@@ -8,79 +8,74 @@
 	*/
 char **strtow(char *str)
 {
-	int i, j, z;
+	int i, j = 0, z = 0, len = 0, nW = 0;
+	char *watcher, **stk;
 
-	char **stk;
-
-	int len = 0;
-
-	int k[1000];
-
-	i = 0;
-
-	if (str == NULL || *str == '\0')
+	if (str == 0 || *str == 0)
 	{
+
 	return (NULL);
 	}
-	while (str[i])
+	i = 0;
+	while (str[i] != '\0')
 	{
-	if ((str[i] != ' ' && str[i + 1] == ' ') || (str[i] != ' ' && str[i - 1] == ' ' && str[i + 1] == ' ') || (str[i] != ' ' && str[i + 1] == '\0'))
-	len++;
+	if (str[i] == ' ')
+	{
+
 	i++;
 	}
-	stk = (char **)malloc(sizeof(char) * len);
+	else
+	{
+	while (str[i] != ' ' && str[i] != '\0')
+	i++;
+	nW++;
+	}
+	}
+	printf("%d", nW);
+	if (nW == 0)
+	return (NULL);
+	stk = (char **)malloc(sizeof(char *) * nW);
 	if (stk == NULL)
-	{
 	return (NULL);
-	}
-	for (i = 0; i < len; i++)
-	k[i] = 0;
-	i = 0;
-	j = 0;
-	while (str[j])
+	for (i = 0; i < nW; i++)
 	{
-	if (str[j] != ' ')
+	while (*str != '\0')
 	{
-	k[i]++;
-	j++;
+	if (*str == ' ')
+	{
+	str++;
 	}
-	if (str[j] == ' ' && str[j + 1] != ' ')
-	i++;
-	if (str[j] == ' ')
-	j++;
-	}
-	j = 0;
+	else
+	{
+	watcher = str;
+	while (*str != '\0' && *str != ' ')
+	{
 
-	for (i = 0; i < len; i++)
-	{
-	stk[i] = (char *)malloc(sizeof(char) * k[i]);
+	len++;
+	str++;
+	}
+
+	stk[i] = (char *)malloc(sizeof(char) * (len + 1));
 	if (stk[i] == NULL)
 	{
-	while (i >= 0)
+	while (i > 0)
 	{
 	free(stk[i]);
 	i--;
 	}
 	free(stk);
 	}
+	while (*watcher != '\0' && *watcher != ' ')
+	{
+	stk[i][z] = *watcher;
+	watcher++;
+	z++;
+	}
+	stk[i][z] = '\0';
+	len = 0;
 	z = 0;
-	while (str[j])
-	{
-	if (str[j] != ' ' && str[j + 1] == ' ')
-	{
-	stk[i][z] = str[j];
-	j++;
-	z++;
-	break;
+	str++;
 	}
-	if (str[j] != ' ')
-	{
-	stk[i][z] = str[j];
-	}
-	if (str[j] == ' ')
-	j++;
-	j++;
-	z++;
 	}
 	}
 	return (stk);
