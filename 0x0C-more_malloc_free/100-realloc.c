@@ -32,6 +32,9 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	}
 	b = ptr;
 	min = old_size;
+	a = malloc(new_size);
+	if (a == NULL)
+		return (NULL);
 	if (min > new_size)
 	{
 		min = new_size;
@@ -41,9 +44,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		free(ptr);
 		return (a);
 	}
-	a = malloc(new_size);
-	if (a == NULL)
-		return (NULL);
 	while (i <= min)
 	{
 		a[i] = b[i];
