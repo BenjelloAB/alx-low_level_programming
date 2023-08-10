@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * 
+ * string_nconcat - concats 1st string with nchars of the 2nd string
  * @s1: pointer to the first string
  * @s2: pointer to the second string
  * @n: number of chars to slice from the s2 string
@@ -18,47 +18,32 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
-	while (s1[i])
-	{
+	while (s1[i++])
 		len1++;
-		i++;
-	}
-	len1--;
 	i = 0;
-	while (s2[i])
-	{
+	while (s2[i++])
 		len2++;
-		i++;
-	}
-	len2--;
 	len = len1 + n + 1;
 	p = (char *)malloc(sizeof(char) * len);
 	if (p == NULL)
 		return (NULL);
 	i = 0;
-	while(s1[i])
+	while (s1[i])
 	{
 		p[i] = s1[i];
 		i++;
 	}
-	n = (int)n;
 	if (len2 <= n)
 	{
 		while (s2[j])
-		{
-			p[i] = s2[j];
-			i++;
-			j++;
-		}
+			p[i++] = s2[j++];
 		p[i] = '\0';
 	}
 	else
 	{
 		while (n > 0)
 		{
-			p[i] = s2[j];
-			j++;
-			i++;
+			p[i++] = s2[j++];
 			n--;
 		}
 		p[i] = '\0';
