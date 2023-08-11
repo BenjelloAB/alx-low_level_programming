@@ -27,7 +27,7 @@ int checkIfNum(const char *s)
 
 	while (s[i])
 	{
-		if `(!(s[i] >= 48 && s[i] <= 57))
+		if (!(s[i] >= 48 && s[i] <= 57))
 			printError();
 		i++;
 	}
