@@ -7,7 +7,7 @@
  * @str: string to copy
  * Return: void
  */
-void copy_str(char *copy, char *str)
+char *copy_str(char *copy, char *str)
 {
 	int i = 0;
 
@@ -17,6 +17,7 @@ void copy_str(char *copy, char *str)
 		i++;
 	}
 	copy[i] = '\0';
+	return (copy);
 }
 /**
  * len_str - calculates the length of a string
@@ -55,7 +56,6 @@ dog_t *new_dog(char *name, float age, char *owner)
 		free(doggy);
 		return (NULL);
 	}
-	copy_str(doggy->name, name);
 	doggy->owner = (char *)malloc(sizeof(char) * len_str(owner));
 	if (doggy->owner == NULL)
 	{
@@ -63,7 +63,8 @@ dog_t *new_dog(char *name, float age, char *owner)
 		free(doggy);
 		return (NULL);
 	}
-	copy_str(doggy->owner, owner);
+	doggy->name = copy_str(doggy->name, name);
+	doggy->owner = copy_str(doggy->owner, owner);
 	doggy->age = age;
 	return (doggy);
 }
