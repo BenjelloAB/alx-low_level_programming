@@ -31,6 +31,7 @@ int len_str(char *str)
 
 	while (str[i])
 		i++;
+	i++;
 	return (i);
 }
 
