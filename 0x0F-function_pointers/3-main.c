@@ -29,7 +29,10 @@ int main(int argc, char *argv[])
 
 	op = get_op_func(argv[2]);
 	if (op == NULL)
-		print_error(99);
+	{
+		printf("Erro\n");
+		exit(99);
+	}
 	printf("%d\n", op(a, b));
 	return (0);
 }
