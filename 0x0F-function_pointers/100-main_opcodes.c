@@ -3,7 +3,7 @@
 
 /**
 	* main - Prints the opcodes of itself
-	* @argc: The number of arguments 
+	* @argc: The number of arguments
 	* @argv: array of pointers to the arguments
 	* Return: int 0
 	*/
