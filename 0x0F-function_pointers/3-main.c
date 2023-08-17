@@ -2,17 +2,6 @@
 #include <stdio.h>
 #include "3-calc.h"
 
-
-/**
- * print_error - print the error code
- * @code: code of exit
- * Return: void
- */
-void print_error(int code)
-{
-	printf("Error\n");
-	exit(code);
-}
 /**
  * main - testing the calculator
  * @argv: array of pointers to each arg
@@ -27,10 +16,14 @@ int main(int argc, char *argv[])
 
 	if (argc != 4)
 	{
-		print_error(98);
+		printf("Erro\n");
+		exit(98);
 	}
 	if (argv[2][1] != '\0')
-		print_error(98);
+	{
+		printf("Error\n");
+		exit(98);
+	}
 	a = atoi(argv[1]);
 	b = atoi(argv[3]);
 
