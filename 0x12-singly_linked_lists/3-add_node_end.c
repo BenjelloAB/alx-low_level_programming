@@ -3,7 +3,7 @@
 #include "lists.h"
 
 /**
- * add_node - add a node at beg of a list
+ * add_node_end - add a node at beg of a list
  * @head: pinter to ponter of list_t staruct type
  * @str: pointer to string
  * Return: list_t
