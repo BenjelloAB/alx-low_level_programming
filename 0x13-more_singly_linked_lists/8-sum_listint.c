@@ -1,6 +1,6 @@
 #include "lists.h"
 /**
- * sum_liatint - returns the sum of the integers inside all teh nodes
+ * sum_listint - returns the sum of the integers inside all teh nodes
  * @head: pointer to the lsit
  * Return: int
  */
