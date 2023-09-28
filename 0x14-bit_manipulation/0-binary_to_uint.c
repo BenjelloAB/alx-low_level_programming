@@ -23,7 +23,7 @@ unsigned int pow_c(int n, int p)
  */
 unsigned int binary_to_uint(const char *b)
 {
-	int len = 0, i = 0, k, j;
+	int len = 0, i = 0, k;
 	unsigned int res = 0;
 
 	if (b == NULL)
