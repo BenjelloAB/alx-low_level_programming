@@ -62,21 +62,21 @@ void handle_errors(char *b, int f1, int f2, const char *fi, const char *e)
 		free(b);
 		exit(98);
 	}
-	if (strcmp(e, "write") == 0)
+	else if (strcmp(e, "write") == 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", fi);
 		free(b);
 		closer(f1, f2);
 		exit(99);
 	}
-	if (strcmp(e, "open") == 0)
+	else if (strcmp(e, "open") == 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", fi);
 		free(b);
 		closer(f1, f2);
 		exit(99);
 	}
-	if (strcmp(e, "read") == 0)
+	else if (strcmp(e, "read") == 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", fi);
 		free(b);
