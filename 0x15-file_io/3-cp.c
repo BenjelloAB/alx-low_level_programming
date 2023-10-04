@@ -41,7 +41,7 @@ void closer(int fd1, int fd2)
 	c2 = close(fd2);
 	if (c2 == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't colse fd %d\n", fd2);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd2);
 		exit(100);
 	}
 }
