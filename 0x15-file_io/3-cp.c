@@ -114,18 +114,7 @@ int main(int argc, const char *argv[])
 	if (fd1 == -1)
 		handle_errors(buffer, fd1, 1, argv[1], "open_f1");
 	umask(0);
-	fd2 = open(argv[2], O_CREAT | O_EXCL | O_WRONLY, 0664);
-	if (fd2 == -1)
-	{
-		if (errno == EEXIST)
-		{
-			fd2 = open(argv[2], O_WRONLY | O_TRUNC);
-			if (fd2 == -1)
-				handle_errors(buffer, fd1, fd2, argv[2], "open");
-		}
-		else
-			handle_errors(buffer, fd1, fd2, argv[2], "open");
-	}
+	fd2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	bytesRead = read(fd1, buffer, 1024);
 	if (bytesRead == -1)
 		handle_errors(buffer, fd1, fd2, argv[1], "read");
