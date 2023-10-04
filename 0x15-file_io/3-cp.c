@@ -101,13 +101,15 @@ int main(int argc, const char *argv[])
 	}
 	bytesRead = read(fd1, buffer, 1024);
 	do {
-		w = write(fd2, buffer, bytesRead);
 		if (bytesRead == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 			exit(98);
 		}
-		if (w == -1 || lseek(fd1, currOffSet, SEEK_SET) == -1)
+		w = write(fd2, buffer, bytesRead);
+		if (w == -1)
+			handle_write(buffer, fd1, fd2, argv[2]);
+		if (lseek(fd1, currOffSet, SEEK_SET) == -1)
 			handle_write(buffer, fd1, fd2, argv[2]);
 		currOffSet += bytesRead;
 		bytesRead = read(fd1, buffer, 1024);
