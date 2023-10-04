@@ -6,131 +6,95 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/**
- * check_buffer - check if the buffer is NULL
- * @file: file name
- * Return: void
- */
-char *check_buffer(const char *file)
-{
-	char *b = malloc(sizeof(char) * 1024);
+char *buffery(char *file);
+void closer(int fd);
 
-	if (b == NULL)
+/**
+ * buffery - allocates a buffer of 1024 bytes
+ * @file: The name of the file we are reading or writing to
+ * Return: A pointer to a char
+ */
+char *buffery(char *file)
+{
+	char *buffer;
+
+	buffer = malloc(sizeof(char) * 1024);
+
+	if (buffer == NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+		dprintf(STDERR_FILENO,
+			"Error: Can't write to %s\n", file);
 		exit(99);
 	}
-	return (b);
-}
-/**
- * closer - function to close open files using their files descriptor
- * @fd1: the file descriptor to close
- * @fd2: the file descriptor to close
- * Return: void
- */
-void closer(int fd1, int fd2)
-{
-	int c1, c2;
 
-	c1 = close(fd1);
-	if (c1 == -1)
+	return (buffer);
+}
+
+/**
+ * closer - closes fd of files
+ * @fd: The file descriptor
+ */
+void closer(int fd)
+{
+	int c;
+
+	c = close(fd);
+
+	if (c == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd1);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 		exit(100);
 	}
-	c2 = close(fd2);
-	if (c2 == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd2);
-		exit(100);
-	}
 }
+
 /**
- * handle_errors - handles -1 values situations in sys calls
- * @b: the buffer to read the data into
- * @f1: the file descriptor of file_from
- * @f2: the file descriptor of file_to
- * @fi: thePOSIX standard error file name
- * @e: string to specify the err type
- * Return: void
+ * main - Copies what in a file to another file
+ * @argc: The number of arguments
+ * @argv: array of pointers to the arguments
+ * Return: 0
  */
-void handle_errors(char *b, int f1, int f2, const char *fi, const char *e)
+int main(int argc, char *argv[])
 {
-	if (strcmp(e, "open_f1") == 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", fi);
-		free(b);
-		exit(98);
-	}
-	else if (strcmp(e, "write") == 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", fi);
-		free(b);
-		closer(f1, f2);
-		exit(99);
-	}
-	else if (strcmp(e, "open") == 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", fi);
-		free(b);
-		closer(f1, f2);
-		exit(99);
-	}
-	else if (strcmp(e, "read") == 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", fi);
-		free(b);
-		closer(f1, f2);
-		exit(98);
-	}
-}
-/**
- * check_argc - checks the number of arguments passed
- * @argc: number of arguments passed
- * Return: void
- */
-void check_argc(int argc)
-{
+	int fd1, fd2, bytesRead, w;
+	char *buffer;
+
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-}
-/**
- * main - copie the content form one file to another
- * @argc: counter of the number of args
- * @argv: array of pointers to the arguments
- * Return: int
- */
-int main(int argc, const char *argv[])
-{
-	int fd1, fd2, w, bytesRead;
-	char *buffer = NULL;
 
-	buffer = check_buffer(argv[2]);
-	check_argc(argc);
+	buffer = buffery(argv[2]);
 	fd1 = open(argv[1], O_RDONLY);
-	if (fd1 == -1)
-		handle_errors(buffer, fd1, 1, argv[1], "open_f1");
-	umask(0);
-	fd2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	bytesRead = read(fd1, buffer, 1024);
-	if (bytesRead == -1)
-		handle_errors(buffer, fd1, fd2, argv[1], "read");
-	while (bytesRead > 0)
-	{
+	fd2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+
+	do {
+		if (fd1 == -1 || bytesRead == -1)
+		{
+			dprintf(STDERR_FILENO,
+				"Error: Can't read from file %s\n", argv[1]);
+			free(buffer);
+			exit(98);
+		}
+
 		w = write(fd2, buffer, bytesRead);
-		if (w == -1)
-			handle_errors(buffer, fd1, fd2, argv[2], "write");
+		if (fd2 == -1 || w == -1)
+		{
+			dprintf(STDERR_FILENO,
+				"Error: Can't write to %s\n", argv[2]);
+			free(buffer);
+			exit(99);
+		}
+
 		bytesRead = read(fd1, buffer, 1024);
-		if (bytesRead == -1)
-			handle_errors(buffer, fd1, fd2, argv[1], "read");
-		fd2 = open(argv[2], O_APPEND | O_WRONLY);
-		if (fd2 == -1)
-			handle_errors(buffer, fd1, fd2, argv[2], "open");
-	}
-	closer(fd1, fd2);
+		fd2 = open(argv[2], O_WRONLY | O_APPEND);
+
+	} while (bytesRead > 0);
+
 	free(buffer);
+	closer(fd1);
+	closer(fd2);
+
 	return (0);
 }
