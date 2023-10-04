@@ -9,14 +9,15 @@
 /**
  * check_buffer - check if the buffer is NULL
  * @b: pointer to the buffer
+ * @file: file name
  * Return: void
  */
-void check_buffer(char *b)
+void check_buffer(char *b, const char *file)
 {
 	if (b == NULL)
 	{
-		dprintf(2, "Error: Not enough memory\n");
-		exit(96);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+		exit(97);
 	}
 }
 /**
@@ -32,13 +33,13 @@ void closer(int fd1, int fd2)
 	c1 = close(fd1);
 	if (c1 == -1)
 	{
-		dprintf(2, "Error: Can't close fd %d\n", fd1);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd1);
 		exit(100);
 	}
 	c2 = close(fd2);
-	if (c2 < 0)
+	if (c2 == -1)
 	{
-		dprintf(2, "Error: Can't close fd %d\n", fd2);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd2);
 		exit(100);
 	}
 }
@@ -47,14 +48,14 @@ void closer(int fd1, int fd2)
  * @buffer: the buffer to read the data into
  * @fd1: the file descriptor of file_from
  * @fd2: the file descriptor of file_to
- * @file_name: the file name
+ * @file_name: thePOSIX standard error file name
  * Return: void
  */
 void handle_write(char *buffer, int fd1, int fd2, const char *file_name)
 {
 	closer(fd1, fd2);
 	free(buffer);
-	dprintf(2, "Error: Can't write to %s\n", file_name);
+	dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_name);
 	exit(99);
 }
 /**
@@ -66,7 +67,7 @@ void check_argc(int argc)
 {
 	if (argc != 3)
 	{
-		dprintf(2, "Usage: cp file_from file_to\n");
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 }
@@ -83,19 +84,19 @@ int main(int argc, const char *argv[])
 	char *buffer = NULL;
 
 	buffer = malloc(sizeof(char) * 1024);
-	check_buffer(buffer);
 	check_argc(argc);
+	check_buffer(buffer, argv[2]);
 	fd1 = open(argv[1], O_RDONLY);
 	if (fd1 == -1)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	fd2 = open(argv[2], O_CREAT | O_EXCL | O_RDWR | O_APPEND, 0664);
+	fd2 = open(argv[2], O_CREAT | O_EXCL | O_WRONLY | O_APPEND, 0664);
 	if (fd2 < 0)
 	{
 		if (errno == EEXIST)
-			fd2 = open(argv[2], O_RDWR | O_TRUNC | O_APPEND);
+			fd2 = open(argv[2], O_WRONLY | O_TRUNC | O_APPEND);
 
 	}
 	while ((bytesRead = read(fd1, buffer, 1024)) > 0)
