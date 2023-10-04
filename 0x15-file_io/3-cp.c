@@ -17,7 +17,7 @@ void check_buffer(char *b, const char *file)
 	if (b == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
-		exit(97);
+		exit(99);
 	}
 }
 /**
@@ -79,8 +79,7 @@ void check_argc(int argc)
  */
 int main(int argc, const char *argv[])
 {
-	int fd1, fd2, l, w;
-	size_t bytesRead, currOffSet = 0;
+	int fd1, fd2, w, bytesRead, currOffSet = 0;
 	char *buffer = NULL;
 
 	buffer = malloc(sizeof(char) * 1024);
@@ -100,20 +99,19 @@ int main(int argc, const char *argv[])
 			fd2 = open(argv[2], O_WRONLY | O_TRUNC | O_APPEND);
 
 	}
-	while ((bytesRead = read(fd1, buffer, 1024)) > 0)
-	{
+	bytesRead = read(fd1, buffer, 1024);
+	do {
 		w = write(fd2, buffer, bytesRead);
-		if (w == -1)
+		if (bytesRead == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			exit(98);
+		}
+		if (w == -1 || lseek(fd1, currOffSet, SEEK_SET) == -1)
 			handle_write(buffer, fd1, fd2, argv[2]);
 		currOffSet += bytesRead;
-		l = lseek(fd1, currOffSet, SEEK_SET);
-		if (l < 0)
-		{
-			closer(fd1, fd2);
-			free(buffer);
-			exit(101);
-		}
-	}
+		bytesRead = read(fd1, buffer, 1024);
+	} while (bytesRead > 0);
 	closer(fd1, fd2);
 	free(buffer);
 	return (0);
