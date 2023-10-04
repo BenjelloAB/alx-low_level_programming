@@ -38,7 +38,7 @@ void closer(int fd1, int fd2)
 	c2 = close(fd2);
 	if (c2 < 0)
 	{
-		dprintf(2, "Error: Can't close fd %d", fd2);
+		dprintf(2, "Error: Can't close fd %d\n", fd2);
 		exit(100);
 	}
 }
@@ -54,7 +54,7 @@ void handle_write(char *buffer, int fd1, int fd2, const char *file_name)
 {
 	closer(fd1, fd2);
 	free(buffer);
-	dprintf(2, "Error: Can't write to %s", file_name);
+	dprintf(2, "Error: Can't write to %s\n", file_name);
 	exit(99);
 }
 /**
