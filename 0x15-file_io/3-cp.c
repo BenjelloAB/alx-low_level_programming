@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdlib.h>
-
+#include <sys/stat.h>
 
 
 /**
@@ -92,6 +92,7 @@ int main(int argc, const char *argv[])
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
+	umask(0);
 	fd2 = open(argv[2], O_CREAT | O_EXCL | O_WRONLY | O_APPEND, 0664);
 	if (fd2 < 0)
 	{
