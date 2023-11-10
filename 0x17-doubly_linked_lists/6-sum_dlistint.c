@@ -3,7 +3,7 @@
 /**
  * sum_dlistint - returns the sum of the data inside the dlist
  * @head: pointer to the head of the dlist
- * Return: int the sum 
+ * Return: int the sum
  */
 int sum_dlistint(dlistint_t *head)
 {
