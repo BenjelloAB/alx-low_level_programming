@@ -20,10 +20,12 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	hd->value = malloc(sizeof(char) * (strlen(value) + 1));
 	if (hd->value == NULL)
 		return (0);
+	strcpy(hd->value, value);
 	hd->key = malloc(sizeof(char) * (strlen(key) + 1));
 	if (hd->key == NULL)
 		return (0);
-	index = key_index(hd->key, ht->size);
+	strcpy(hd->key, key);
+	index = key_index((const unsigned char *)hd->key, ht->size);
 	curr = ht->array[index];
 	if (curr == NULL)
 		ht->array[index] = hd;
