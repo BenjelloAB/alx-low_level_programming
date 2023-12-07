@@ -28,6 +28,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 		{
 			free(curr->value);
 			curr->value = strdup(value);
+			free_node(hd);
 			return (1);
 		}
 		while (curr)
@@ -36,6 +37,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 			{
 				free(curr->value);
 				curr->value = strdup(value);
+				free_node(hd);
 				return (1);
 			}
 			curr = curr->next;
@@ -60,14 +62,19 @@ hash_node_t *create_hash_node(const char *key, const char *value)
 	hd = malloc(sizeof(hash_node_t));
 	if (!hd)
 		return (NULL);
-	hd->value = malloc(sizeof(char) * (strlen(value) + 1));
-	if (hd->value == NULL)
-		return (NULL);
-	strcpy(hd->value, value);
-	hd->key = malloc(sizeof(char) * (strlen(key) + 1));
-	if (hd->key == NULL)
-		return (NULL);
-	strcpy(hd->key, key);
+	hd->key = strdup(key);
+	hd->value = strdup(value);
 	hd->next = NULL;
 	return (hd);
+}
+/**
+ * free_node - frees a node
+ * @hd: pointer to the node
+ *
+ */
+void free_node(hash_node_t *hd)
+{
+	free(hd->key);
+	free(hd->value);
+	free(hd);
 }
